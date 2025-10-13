@@ -33,6 +33,8 @@ for _ in range(T):
     # 선행 건물이 없는 건물부터 시작
     for i in range(1, N + 1):
         if indegree[i] == 0:
+            
+            # 시작점 추가
             queue.append(i)
             dp[i] = TimeL[i]  # 자기 자신 건설 시간
     
