@@ -12,14 +12,17 @@ for _ in range(M):
     Graph[a].append(b)
     indegree[b] += 1
 
+# 비용에 대한 내용이 없으므로, 선후관계만 따지면 된다.
 result = []
 Q = deque()
 
+# 먼저 설 수 있는 학생들
 # 진입 차수가 0인 노드를 큐에 넣기
 for i in range(1, Student + 1):
     if indegree[i] == 0:
         Q.append(i)
 
+# 학생들 다음으로 선후관계 조사
 while Q:
     now = Q.popleft()
     result.append(now)
