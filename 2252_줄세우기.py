@@ -27,7 +27,11 @@ while Q:
     # 현재 노드와 연결된 노드들의 진입차수 감소
     for nxt in Graph[now]:
         indegree[nxt] -= 1
+        
+        # 만약 더이상 들어오는게 없다면 (사전 확인 끝남)
         if indegree[nxt] == 0:
+            
+            # 큐에 넣기
             Q.append(nxt)
 
 print(*result)
