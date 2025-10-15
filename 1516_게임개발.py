@@ -1,40 +1,48 @@
 # 1516_게임개발
+# 건물을 짓는데 걸리는 시간
 
 from collections import defaultdict, deque
 
 N = int(input())
-graph = defaultdict(list)
-indegree = [0] * (N + 1)
-timeL = [0] * (N + 1)
 
-# 입력 받기
-for i in range(1, N + 1):
-    data = list(map(int, input().split()))
-    timeL[i] = data[0]  # 건설 시간
-    for prev in data[1:-1]:  # -1 전까지가 선행 건물 목록
-        graph[prev].append(i)  # prev → i (선행 → 현재)
+
+# 각 건물을 짓는데 걸리는 시간
+TimeL = [0] * (N+1)
+
+# 각 건물 짓는 규칙 그래프
+Graph = defaultdict(list)
+
+# 각 건물의 진입차수 리스트
+indegree = [0] * (N+1)
+
+# 건물을 짓는 비용과 선후관계를 동시에 따져야한다
+dp = [0] * (N+1)
+
+# 건물 정보 입력
+for i in range(1, N+1):
+    Input = list(map(int, input().split()))
+    TimeL[i] = Input[0]
+    for k in Input[1:-1]:        
+        Graph[k].append(i)
         indegree[i] += 1
 
-# DP: 각 건물까지 걸린 최소 시간
-dp = [0] * (N + 1)
-q = deque()
-
-# 진입차수 0인 건물부터 시작
-for i in range(1, N + 1):
+# 먼저 짓는 건물들
+Q = deque()
+for i in range(1, N+1):
     if indegree[i] == 0:
-        q.append(i)
-        dp[i] = timeL[i]
+        Q.append(i)
+        dp[i] = TimeL[i]
 
-# 위상정렬
-while q:
-    now = q.popleft()
-    for nxt in graph[now]:
-        # nxt 건물 완성 시간 = max(기존, now 완료 후 nxt 짓는 시간)
-        dp[nxt] = max(dp[nxt], dp[now] + timeL[nxt])
-        indegree[nxt] -= 1
-        if indegree[nxt] == 0:
-            q.append(nxt)
+# 선후관계 조사 (건물번호)
+while Q:
+    node = Q.popleft()
+    for n in Graph[node]:
+        indegree[n] -= 1
+        dp[n] = max(dp[n], dp[node] + TimeL[n])
+        if indegree[n] == 0:
+            Q.append(n)
 
-# 결과 출력
-for i in range(1, N + 1):
+for i in range(1, N+1):
     print(dp[i])
+        
+    
