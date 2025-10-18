@@ -29,7 +29,7 @@ ML = [] # 미세먼지 위치
 for r in range(R):
     Input = list(map(int, input().split()))
     Map2L.append(Input[:])    
-    Result2L.append(Input[:])    
+    # Result2L.append(Input[:])    
     for c in range(C):
         # 공기청정기 위치 등록
         if Input[c] == -1:
@@ -51,8 +51,19 @@ dy = [0, 0, -1, 1]
 
 for _ in range(T):
 
+    ###########
+    #초기화
+    Result2L = [[0]*C for _ in range(R)]
+        #공기청정기 위치
+    Result2L[GL[0][0]][GL[0][1]] = -1
+    Result2L[GL[1][0]][GL[1][1]] = -1
+    #매 순간마다 체크
+    ML = [(r,c) for r in range(R) for c in range(C) if Map2L[r][c] > 0]
+    ###########
+    
+    
     # 미세먼지 퍼지기
-    NS = set(ML)
+    # NS = set(ML)
     Q = deque(ML)
     while Q:
         (mr, mc) = Q.popleft()
@@ -63,15 +74,15 @@ for _ in range(T):
             if 0 <= x < R and 0 <= y < C and (x, y) != (GL[0][0], GL[0][1]) and (x, y) != (GL[1][0], GL[1][1]):                
                 Result2L[x][y] += Amount//5
                 count += 1
-                NS.add((x, y))
+                # NS.add((x, y))
                     
-        Result2L[mr][mc] -= (Amount//5) * count
+        Result2L[mr][mc] += Amount - (Amount//5) * count
     
-    ML = list(NS)
+    # ML = list(NS)
     
     # 공기청정기 작동
     # CleanL = ["0c", "-1c", "0r", "-1r", "가운데 두줄"]
-
+    
     # 위쪽 공기청정기
     up = GL[0][0]
     # ↓ 왼쪽 세로
