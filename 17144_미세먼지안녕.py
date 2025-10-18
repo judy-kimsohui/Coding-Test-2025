@@ -83,7 +83,7 @@ for _ in range(T):
     # ↑ 오른쪽 세로
     for r in range(0, up):
         Result2L[r][-1] = Result2L[r+1][-1]
-    # ← 아래쪽 줄
+    # → 아래쪽 줄
     for c in range(C-1, 1, -1):
         Result2L[up][c] = Result2L[up][c-1]
     Result2L[up][1] = 0
