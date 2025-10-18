@@ -64,6 +64,7 @@ for _ in range(T):
                 Result2L[x][y] += Amount//5
                 count += 1
                 NS.add((x, y))
+                    
         Result2L[mr][mc] -= (Amount//5) * count
     
     ML = list(NS)
@@ -73,37 +74,39 @@ for _ in range(T):
 
 
     # 위쪽 공기청정기
-    # c0 아래쪽으로 한칸 이동
-    for r in range(GL[0][0]-1, 0, -1):
+    up = GL[0][0]
+    # ↓ 왼쪽 세로
+    for r in range(up-1, 0, -1):
         Result2L[r][0] = Result2L[r-1][0]
     # ← 위쪽 줄
     for c in range(C-1):
         Result2L[0][c] = Result2L[0][c+1]
-    # → 오른쪽 세로
-    for r in range(0, GL[0][0]):
+    # ↑ 오른쪽 세로
+    for r in range(0, up):
         Result2L[r][-1] = Result2L[r+1][-1]
-    # ↓ 아래쪽 줄
+    # ← 아래쪽 줄
     for c in range(C-1, 1, -1):
-        Result2L[GL[0][0]][c] = Result2L[GL[0][0]][c-1]
-    Result2L[GL[0][0]][1] = 0
-    Result2L[GL[0][0]][0] = -1
+        Result2L[up][c] = Result2L[up][c-1]
+    Result2L[up][1] = 0
+    Result2L[up][0] = -1
 
 
     # 아래쪽 공기청정기
-    # c0 위쪽으로 한칸 이동
-    for r in range(GL[1][0]+1, R-1):
+    down = GL[1][0]
+    # ↑ 왼쪽 세로
+    for r in range(down+1, R-1):
         Result2L[r][0] = Result2L[r+1][0]
-    # → 아랫줄
+    # ← 아래쪽 줄
     for c in range(C-1):
         Result2L[R-1][c] = Result2L[R-1][c+1]
-    # ↑ 오른쪽 세로
-    for r in range(R-1, GL[1][0], -1):
+    # ↓ 오른쪽 세로
+    for r in range(R-1, down, -1):
         Result2L[r][-1] = Result2L[r-1][-1]
-    # ← 윗줄
+    # → 위쪽 줄
     for c in range(C-1, 1, -1):
-        Result2L[GL[1][0]][c] = Result2L[GL[1][0]][c-1]
-    Result2L[GL[1][0]][1] = 0
-    Result2L[GL[1][0]][0] = -1
+        Result2L[down][c] = Result2L[down][c-1]
+    Result2L[down][1] = 0
+    Result2L[down][0] = -1
 
 
     # 새로운 정보 반영
