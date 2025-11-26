@@ -65,17 +65,8 @@ else:
     Ladder1 = []
     for s in range(N-1):
         for h in range(H):
-            if Ladder[s][h] == 0:
-                Check = False
-                if s == 0 and Ladder[s+1][h] == 0:
-                    Check = True
-                elif s == N-1 and Ladder[s-1][h] == 0:
-                    Check = True
-                else:
-                    if Ladder[s-1][h] == 0 and Ladder[s+1][h] == 0:
-                        Check = True                
-                if Check:
-                    Ladder1.append((s, h))
+            if Ladder[s][h] == 0 and Ladder[s+1][h] == 0:
+                Ladder1.append((s, h))
     # print(Ladder1)
     
     # 사다리 가로 놓을 수 있는 위치 (2)
