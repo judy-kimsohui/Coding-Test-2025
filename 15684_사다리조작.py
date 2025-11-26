@@ -57,133 +57,43 @@ if CanDo:
     print(0)
 
 else:
-    # 가로선을 추가하여, 성공 여부 확인
-    # 3개를 초과하면 안됨
-    # print(Count)
-    
     # 사다리 가로 놓을 수 있는 위치 (1)
     Ladder1 = []
     for s in range(N-1):
         for h in range(H):
             if Ladder[s][h] == 0 and Ladder[s+1][h] == 0:
                 Ladder1.append((s, h))
-    # print(Ladder1)
-    
-    # 사다리 가로 놓을 수 있는 위치 (2)
-    Ladder2 = []
-    Ladder2Check = list(combinations(Ladder1, 2))
-    for ((s1, h1), (s2, h2)) in Ladder2Check:
-        if not (h1 == h2 and abs(s1-s2) == 1):        
-            Ladder2.append(((s1, h1), (s2, h2)))
-    
-    # 사다리 가로 놓을 수 있는 위치 (1+2)
-    Ladder3 = []
-    for ((s1, h1), (s2, h2)) in Ladder2:
-        for (s3, h3) in Ladder1:            
-            # 같은 위치는 아예 제외
-            if (s3, h3) == (s1, h1) or (s3, h3) == (s2, h2):
+
+    answer = 4
+
+    def is_ok():
+        for i in range(N):
+            if check(i) != i:
+                return False
+        return True
+
+    def dfs(idx, cnt):
+        global answer
+        if cnt >= answer:
+            return
+        if is_ok():
+            answer = cnt
+            return
+        if cnt == 3:
+            return
+
+        for i in range(idx, len(Ladder1)):
+            s, h = Ladder1[i]
+            if Ladder[s][h] != 0 or Ladder[s+1][h] != 0:
                 continue
-            
-            # 서로 인접한 가로선이 생기면 안 됨
-            if h1 == h3 and abs(s1 - s3) == 1:
-                continue
-            if h2 == h3 and abs(s2 - s3) == 1:
-                continue
-            
-            Ladder3.append(((s1, h1), (s2, h2), (s3, h3)))
-                    
-    # 1~3개 Bruteforce
-    for n in range(1, 4):
-        if n == 1:
-            for s1, h1 in Ladder1:
-                Ladder[s1][h1] = +1     # 나가는 선
-                Ladder[s1+1][h1] = -1   # 들어오는 선
 
-                # 1 ~ N번 세로선에 대해 i=i가 가능한지 확인
-                CanDo = True
-                for n in range(N): 
+            Ladder[s][h] = +1
+            Ladder[s+1][h] = -1
+            dfs(i + 1, cnt + 1)
+            Ladder[s][h] = 0
+            Ladder[s+1][h] = 0
 
-                    # 마지막이 t가 n일 경우, "성공"
-                    if check(n) == n:
-                        continue
-                    
-                    # 실패 - 선을 추가해야함
-                    else:
-                        CanDo = False
+    dfs(0, 0)
 
-                if CanDo:
-                    print(1)
-                    exit(0)
-                else:
-                    Ladder[s1][h1] = 0     # 나가는 선
-                    Ladder[s1+1][h1] = 0   # 들어오는 선
-            
-        elif n == 2:
-            for ((s1, h1), (s2, h2)) in Ladder2:
-                Ladder[s1][h1] = +1     # 나가는 선
-                Ladder[s1+1][h1] = -1   # 들어오는 선
-                
-                Ladder[s2][h2] = +1     # 나가는 선
-                Ladder[s2+1][h2] = -1   # 들어오는 선
-
-                # 1 ~ N번 세로선에 대해 i=i가 가능한지 확인
-                CanDo = True
-                for n in range(N): 
-
-                    # 마지막이 t가 n일 경우, "성공"
-                    if check(n) == n:
-                        continue
-                    
-                    # 실패 - 선을 추가해야함
-                    else:
-                        CanDo = False
-
-                if CanDo:
-                    print(2)
-                    exit(0)
-                else:
-                    Ladder[s1][h1] = 0     # 나가는 선
-                    Ladder[s1+1][h1] = 0   # 들어오는 선
-                    
-                    Ladder[s2][h2] = 0     # 나가는 선
-                    Ladder[s2+1][h2] = 0   # 들어오는 선            
-            
-        elif n == 3:
-            for ((s1, h1), (s2, h2), (s3, h3)) in Ladder3:
-                Ladder[s1][h1] = +1     # 나가는 선
-                Ladder[s1+1][h1] = -1   # 들어오는 선
-                
-                Ladder[s2][h2] = +1     # 나가는 선
-                Ladder[s2+1][h2] = -1   # 들어오는 선
-
-                Ladder[s3][h3] = +1     # 나가는 선
-                Ladder[s3+1][h3] = -1   # 들어오는 선
-
-                # 1 ~ N번 세로선에 대해 i=i가 가능한지 확인
-                CanDo = True
-                for n in range(N): 
-
-                    # 마지막이 t가 n일 경우, "성공"
-                    if check(n) == n:
-                        continue
-                    
-                    # 실패 - 선을 추가해야함
-                    else:
-                        CanDo = False
-
-                if CanDo:
-                    print(3)
-                    exit(0)
-                else:
-                    Ladder[s1][h1] = 0     # 나가는 선
-                    Ladder[s1+1][h1] = 0   # 들어오는 선
-                    
-                    Ladder[s2][h2] = 0     # 나가는 선
-                    Ladder[s2+1][h2] = 0   # 들어오는 선
-            
-                    Ladder[s3][h3] = 0     # 나가는 선
-                    Ladder[s3+1][h3] = 0   # 들어오는 선
-            
-    print(-1)
-
+    print(answer if answer <= 3 else -1)
 
