@@ -20,3 +20,9 @@ class Main {
         System.out.println(N * M - 1);
     }
 }
+
+/***
+    BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+    bw.write(String.valueOf(N * M - 1));
+    bw.flush();
+***/
