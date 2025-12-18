@@ -8,10 +8,15 @@
 // 읽기 : BufferedReader
 // 출력 : BufferedWriter
 
+// BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+// bw.write(String.valueOf(N * M - 1));
+// bw.flush();
+
+
 import java.io.*;
 import java.util.*;
 
-class Main {
+class java_2163_초콜릿 {
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
@@ -20,9 +25,3 @@ class Main {
         System.out.println(N * M - 1);
     }
 }
-
-/***
-    BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-    bw.write(String.valueOf(N * M - 1));
-    bw.flush();
-***/

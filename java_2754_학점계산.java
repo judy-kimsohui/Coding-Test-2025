@@ -6,7 +6,7 @@
 
 import java.io.*;
 
-class Main {
+class java_2754_학점계산 {
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));        
         String grade = br.readLine();
