@@ -10,7 +10,7 @@ public class java_11399_ATM {
         // ATM 앞에 N명의 사람들이 줄을 서있다
         // i번째 사람이 돈을 인출하는데 걸리는 시간은 pi분
         
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));        
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         // BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         int N = Integer.parseInt(br.readLine());
